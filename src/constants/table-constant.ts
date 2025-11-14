@@ -45,3 +45,11 @@ export const INITIAL_STATE_TABLE = {
   },
 };
 
+export const HEADER_TABLE_DETAIL_ORDER = [
+  "No",
+  "Menu",
+  "Total",
+  "Status",
+  "Action",
+];
+
