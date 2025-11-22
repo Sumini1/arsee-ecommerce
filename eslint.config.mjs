@@ -15,10 +15,10 @@ const eslintConfig = [
 
 estlintConflig.push({
   rules: {
-    "react-hooks/exhaustive-deps": "off",
+    "react-hooks/exhaustive-deps": "false",
     "react/jsx-key": "off",
-    "typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/no-unsued-vars": "off",
+    "typescript-eslint/no-explicit-any": "false",
+    "@typescript-eslint/no-unsued-vars": "false",
   },
 });
 
