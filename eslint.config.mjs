@@ -13,7 +13,7 @@ const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
 ];
 
-estlintConflig.push({
+estlintConfig.push({
   rules: {
     "react-hooks/exhaustive-deps": "false",
     "react/jsx-key": "off",
