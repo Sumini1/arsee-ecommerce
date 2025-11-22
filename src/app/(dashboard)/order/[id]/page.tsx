@@ -1,15 +1,32 @@
+
+import Script from "next/script";
 import DetailOrder from "./_components/detail-order";
+import { environtment } from "@/configs/environtment";
 
 export const metadata = {
-  title: "Arsee Wears | Detail Order",
+  title: "Arsee Wear| Detail Order",
 };
 
-export default async  function DetailOrderPage({
+declare global {
+  interface Window {
+    snap: any;
+  }
+}
+
+export default async function DetailOrderPage({
   params,
 }: {
-  params:  Promise<{ id: string }>;   
+  params: Promise<{ id: string }>;
 }) {
-const { id } = await params;
-
-  return <DetailOrder id={id} />;
+  const { id } = await params;
+  return (
+    <div className="w-full">
+      <Script
+        src={`${environtment.MIDTRANS_API_URL}/snap/snap.js`}
+        data-client-key={environtment.MIDTRANS_CLIENT_KEY}
+        strategy="lazyOnload"
+      />
+      <DetailOrder id={id} />
+    </div>
+  );
 }

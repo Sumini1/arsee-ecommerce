@@ -1,3 +1,5 @@
+import { INITIAL_STATE_ACTION } from "./general-constant";
+
 export const HEADER_TABLE_ORDER = [
   "No",
   "Order ID",
@@ -13,7 +15,6 @@ export const INITIAL_ORDER = {
   status: "",
 };
 
-
 export const INITIAL_STATE_ORDER = {
   status: "idle",
   errors: {
@@ -21,7 +22,7 @@ export const INITIAL_STATE_ORDER = {
     table_id: [],
     status: [],
     _form: [],
-  }
+  },
 };
 
 export const STATUS_CREATE_ORDER = [
@@ -46,26 +47,17 @@ export const HEADER_TABLE_DETAIL_ORDER = [
   "Status",
   "Action",
 ];
-
 export const FILTER_MENU = [
-  {
-    value: "",
-    label: "All",
-  },
-  {
-    value: "abaya",
-    label: "Abaya",
-  },
-  {
-    value: "pasban-aisyah",
-    label: "Pasban Aisyah",
-  },
-  {
-    value: "pasban-Jetblack-lily",
-    label: "Pasban Jetblack Lily",
-  },
-  {
-    value: "abaya-nayla",
-    label: "Abaya Nayla",
-  }
+  { value: "", label: "All" },
+  { value: "Pasban Aisyah", label: "Pasban Aisyah" },
+  { value: "Khimar Jetblack Lily", label: "Khimar Jetblack Lily" },
+  { value: "khimar", label: "Khimar" },
 ];
+
+
+export const INITIAL_STATE_GENERATE_PAYMENT = {
+    ...INITIAL_STATE_ACTION,
+    data : {
+      payment_token: "",
+    }
+}

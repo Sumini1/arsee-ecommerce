@@ -55,16 +55,14 @@ export const ROLE_LIST = [
     label: "Admin",
   },
   {
-    value: "kitchen",
-    label: "Kitchen",
+    value: "service",
+    label: "Service",
   },
   {
     value: "cashier",
     label: "Cashier",
   },
 ];
-
-
 
 export const AVAILABILITY_LIST = [
   {
@@ -75,5 +73,4 @@ export const AVAILABILITY_LIST = [
     value: "false",
     label: "Not Available",
   },
- 
 ];

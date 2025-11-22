@@ -1,7 +1,9 @@
-export default function AdminDashboardPage() {
-    return (
-        <div>
-            <h1>Dashboard</h1>
-        </div>
-    )
+import Dashboard from "./_components/dashboard";
+
+export const metadata = {
+  title: "Arsee Wear | Dashboard",
+};
+
+export default function DashboardPage() {
+  return <Dashboard />;
 }
