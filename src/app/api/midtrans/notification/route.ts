@@ -6,7 +6,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    console.log("📩 Midtrans Notification:", body);
+    console.log("Received Midtrans notification:", body);
 
     // Inisialisasi Supabase dengan service role key
     const supabase = createClient(
@@ -32,13 +32,14 @@ export async function POST(request: NextRequest) {
       .digest("hex");
 
     if (hash !== body.signature_key) {
-      console.error("❌ Invalid signature");
+      console.error("Invalid signature");
       return NextResponse.json(
         { message: "Invalid signature" },
         { status: 401 }
       );
     }
 
+    // Cek status transaksi dari Midtrans
     const transactionStatus = body.transaction_status;
     const fraudStatus = body.fraud_status;
 
@@ -57,11 +58,31 @@ export async function POST(request: NextRequest) {
       transactionStatus === "expire"
     ) {
       orderStatus = "canceled";
+    } else if (transactionStatus === "pending") {
+      orderStatus = "process"; // Tetap process jika masih pending
     }
 
-    // Update status order di database
-    if (orderStatus) {
-      const { data, error } = await supabase
+    // Update status order di database jika ada perubahan status
+    if (orderStatus && orderStatus !== "process") {
+      // Fetch order untuk cek apakah ada
+      const { data: existingOrder, error: fetchError } = await supabase
+        .from("orders")
+        .select("id, status, order_id")
+        .eq("order_id", orderId)
+        .single();
+
+      if (fetchError) {
+        console.error("❌ Error fetching order:", fetchError);
+        return NextResponse.json(
+          { message: "Order not found", error: fetchError.message },
+          { status: 404 }
+        );
+      }
+
+      console.log("📦 Found order:", existingOrder);
+
+      // Update status order menggunakan order_id (text) bukan id (integer)
+      const { data: updatedOrder, error: updateError } = await supabase
         .from("orders")
         .update({
           status: orderStatus,
@@ -70,24 +91,27 @@ export async function POST(request: NextRequest) {
         .eq("order_id", orderId)
         .select();
 
-      if (error) {
-        console.error("❌ Error updating order:", error);
+      if (updateError) {
+        console.error("❌ Error updating order:", updateError);
         return NextResponse.json(
-          { message: "Failed to update order", error: error.message },
+          { message: "Failed to update order", error: updateError.message },
           { status: 500 }
         );
       }
 
-      console.log(`✅ Order ${orderId} updated to ${orderStatus}`, data);
+      console.log(
+        `✅ Order ${orderId} updated from "${existingOrder.status}" to "${orderStatus}"`,
+        updatedOrder
+      );
     }
 
     return NextResponse.json({
-      message: "OK",
+      message: "Notification processed successfully",
       order_id: orderId,
       status: orderStatus,
     });
   } catch (error) {
-    console.error("❌ Webhook error:", error);
+    console.error("Webhook error:", error);
     return NextResponse.json(
       { message: "Internal server error", error: String(error) },
       { status: 500 }
