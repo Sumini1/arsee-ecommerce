@@ -17,7 +17,12 @@ export default function LineCharts({
       <LineChart width={300} height={300} data={data}>
         <Tooltip wrapperClassName="!bg-white z-20 dark:!-neural-900 rounded-md" />
         <Legend />
-        <Line type="monotone" dataKey="total" stroke="#00bba7" strokeWidth={2} />
+        <Line
+          type="monotone"
+          dataKey="total"
+          stroke="#ff008e"
+          strokeWidth={2}
+        />
         <XAxis dataKey="name" className="!hide opacity-0!" />
       </LineChart>
     </ResponsiveContainer>

@@ -198,6 +198,7 @@ export default function OrderManagement() {
             "bg-sky-600": order.status === "process",
             "bg-amber-600": order.status === "reserved",
             "bg-red-600": order.status === "canceled",
+            
           })}
         >
           {order.status}

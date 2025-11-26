@@ -38,6 +38,10 @@ export const STATUS_CREATE_ORDER = [
     value: "done",
     label: "Done",
   },
+  {
+    value: "settled",
+    label: "Settled",
+  },
 ];
 
 export const HEADER_TABLE_DETAIL_ORDER = [
@@ -54,10 +58,9 @@ export const FILTER_MENU = [
   { value: "khimar", label: "Khimar" },
 ];
 
-
 export const INITIAL_STATE_GENERATE_PAYMENT = {
-    ...INITIAL_STATE_ACTION,
-    data : {
-      payment_token: "",
-    }
-}
+  ...INITIAL_STATE_ACTION,
+  data: {
+    payment_token: "",
+  },
+};
